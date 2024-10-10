@@ -1,13 +1,19 @@
 import React from 'react';
 
-const Trends = ({ trends }) => {
+const Trends = () => {
+  const trends = [
+    { hashtag: '#React', count: 1200 },
+    { hashtag: '#JavaScript', count: 850 },
+    { hashtag: '#NextJS', count: 500 }
+  ];
+
   return (
     <div className="trends">
-      <h3>Tendances</h3>
+      <h2>Trends</h2>
       <ul>
         {trends.map((trend, index) => (
           <li key={index}>
-            #{trend.hashtag} ({trend.count})
+            {trend.hashtag} - {trend.count} times
           </li>
         ))}
       </ul>
@@ -16,3 +22,4 @@ const Trends = ({ trends }) => {
 };
 
 export default Trends;
+

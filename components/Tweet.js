@@ -1,27 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const Tweet = ({ tweet, user }) => {
-  const [likes, setLikes] = useState(tweet.likes);
-
-  const handleLike = () => {
-    setLikes(likes + 1);
-  };
-
+const Tweet = ({ tweet, isOwner, onDelete }) => {
+  
+  
   const handleDelete = () => {
-   
-    console.log('Tweet supprimé');
+    if (isOwner && window.confirm('Voulez-vous vraiment supprimer ce tweet ?')) {
+      onDelete(tweet.id);
+    }
   };
 
   return (
     <div className="tweet">
-      <p>{tweet.text}</p>
-      <p>Posté par: {tweet.user}</p>
-      <button onClick={handleLike}>Like ({likes})</button>
-      {tweet.user === user.username && (
-        <button onClick={handleDelete}>Supprimer</button>
+      <p>{tweet.content}</p>
+      <span>{tweet.author}</span>
+      <button onClick={() => console.log('Like')}>Like</button>
+      {isOwner && (
+        <button onClick={handleDelete}>Delete</button>
       )}
     </div>
   );
 };
 
 export default Tweet;
+
