@@ -1,7 +1,8 @@
-import Home from '../components/Home';
+import SignUp from '../components/SignUp';
+import SignIn from '../components/SignIn';
 
 function Index() {
-  return <Home />;
+  return <SignIn open={true}/>;
 }
 
 export default Index;
