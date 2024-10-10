@@ -39,9 +39,8 @@ export default function SignUp(props) {
       open={props.open}
       footer={null}
       onCancel={() => props.onCancel()}
-      styles={{content:{backgroundColor:"rgb(23,31,42)" , color:"white"}}}
+      styles={{ content: { backgroundColor: "rgb(23,31,42)", color: "white" } }}
     >
-        
       <div className={styles.main}>
         <Image
           src="/ReverseLogoTwitter.png"
