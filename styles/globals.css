@@ -1,7 +1,13 @@
+@font-face {
+  font-family: "mont-heavy";   
+  src: local("Mont-Heavy"),
+    url("../public/Mont-Heavy.otf")
+}
+
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: Verdana, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
@@ -9,9 +15,9 @@ body {
   box-sizing: border-box;
 }
 
-/* .ant-modal-content {
-  padding : 0 !important;
+h1{
+  font-size: 70px;
 }
-.ant-modal-close{
-  color : white !important;
-} */
+h2{
+  font-size : 30px
+}

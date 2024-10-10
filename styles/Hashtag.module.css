@@ -1,0 +1,74 @@
+.main{
+    background-color: rgb(23,31,42);
+    color:white;
+    display: grid;
+    grid-template-columns: 2fr 4fr 3fr;
+    height: 100vh;
+}
+.leftSection{
+    border-right: 1px solid grey;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+}
+.returnLink{
+    display:contents;
+    cursor: pointer;
+}
+
+.rightSection{
+    border-left: 1px solid grey;
+}
+.title{
+    font-size: 30px;
+}
+.header{
+    display: flex;
+    flex-direction: column;
+    margin : 20px;
+}
+.input{
+    margin : 20px 40px;
+    height: 30px;
+    border-radius: 15px;
+    border: 0;
+    background-color: rgb(33, 41, 52);
+    color : white;
+
+}
+.userInfos{
+    display: flex;
+    align-items: center;
+}
+.profilPicture > span{
+    max-width: 100%;
+	height: auto;
+    object-fit:cover;
+}
+.userNames{
+    display: flex;
+    flex-direction: column;
+    margin : 5px
+}
+.name{
+    margin : 3px
+}
+.footLeftSection{
+    margin : 20px;
+}
+.logoutBtn{
+    background-color: rgb(23,31,42);
+    border : 1px solid gray;
+    height: 20px;
+    border-radius: 10px;
+    color : white;
+    cursor: pointer;
+    padding : 2px 20px;
+}
+.logoutBtn:hover{
+    background-color: rgb(45, 53, 65);
+}
+.rightSection{
+    padding : 20px
+}

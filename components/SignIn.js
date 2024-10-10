@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import styles from "../styles/SignUp.module.css";
-import { Modal ,CloseOutlined} from "antd";
+import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { login } from "../reducers/user";
@@ -27,7 +27,13 @@ export default function SignUp(props) {
           fetch(`http://localhost:3000/users/firstname/${data.token}`)
             .then((response) => response.json())
             .then((dataUsername) => {
-              dispatch(login({ firstname : dataUsername.firstname, username, token: data.token }));
+              dispatch(
+                login({
+                  firstname: dataUsername.firstname,
+                  username,
+                  token: data.token,
+                })
+              );
               router.push("/home");
             });
         } else {
@@ -38,13 +44,14 @@ export default function SignUp(props) {
 
   return (
     <Modal
-    content={<div>test</div>}
       className={styles.modal}
       open={props.open}
       footer={null}
       onCancel={() => props.onCancel()}
-      closeIcon = {<CloseOutlined />}
-      styles={{content:{backgroundColor:"rgb(23,31,42)", color:"white"},"close-icon":{color :"red"}}}
+      styles={{
+        content: { backgroundColor: "rgb(23,31,42)", color: "white" },
+        "close-icon": { color: "red" },
+      }}
     >
       <div className={styles.main}>
         <Image
@@ -70,7 +77,7 @@ export default function SignUp(props) {
             placeholder="Password"
           />
           <button onClick={() => handleClick()} className={styles.button}>
-            Sing up
+            Sing in
           </button>
         </div>
       </div>

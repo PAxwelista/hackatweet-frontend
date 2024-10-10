@@ -1,0 +1,48 @@
+.main{
+    background-color: rgb(23,31,42);
+    display: grid;
+    grid-template-columns: 5fr 4fr 4fr; 
+    color : white;
+    height: 100vh;
+    font-family: mont-heavy,Verdana, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+.leftSide{
+   background-image: url("https://u9m4v4n3.rocketcdn.me/wp-content/uploads/2021/03/twitter-accueil-1360x1058.jpg");
+    background-position: left;
+    background-size:1700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.centerSide{
+    margin : 20px
+}
+.button{
+    height: 40px;
+    border-radius: 20px;
+    border : 0;
+    width: 200px;
+    margin : 30px 0;
+    cursor : pointer
+}   
+
+.buttonsContainer{
+    display: flex;
+    flex-direction: column;
+}
+.signUpButton{
+    background-color: rgb(70,150,250);
+    color : white
+}
+.signUpButton:hover{
+    background-color: rgb(132, 185, 249);
+}
+.signInButton{
+    background-color: rgb(23,31,42);
+    color : rgb(9, 154, 232);
+    border : 1px solid gray
+}
+.signInButton:hover{
+    background-color: rgb(41, 47, 57);
+}
