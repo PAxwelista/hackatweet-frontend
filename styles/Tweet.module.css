@@ -1,0 +1,40 @@
+.tweet{
+    border-top: 1px solid grey;
+    padding : 20px;
+}
+
+.firstLine{
+    display: flex;
+}
+
+
+.userInfos{
+    display: flex;
+    align-items: center;
+    padding : 10px;
+}
+.heart{
+    cursor:pointer;
+}
+.heart:hover{
+    color :rgb(250, 189, 189);
+}
+.trash{
+    cursor:pointer;
+}
+.trash:hover{
+    color : lightgray;
+}
+.secondUserInfo{
+    margin-left: 5px;
+    color : grey;
+}
+.lastLine{
+    display: flex;
+}
+.nbLikes{
+    margin :0 10px 0 5px ;
+}
+.colorSpan{
+    color : #6a9af8
+}

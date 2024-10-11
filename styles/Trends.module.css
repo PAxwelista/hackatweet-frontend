@@ -1,0 +1,27 @@
+.title{
+    font-size: 30px;
+    margin-bottom:20px
+}
+.trends{
+    background-color: rgb(33, 41, 52);
+    border-radius: 10px;
+}
+.trend{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    cursor: pointer;
+}
+.trend:hover{
+    background-color: rgb(57, 69, 86);
+    border-radius: 10px;
+}
+.main{
+    display: flex;
+    flex-direction: column;
+}
+.textNbTweet{
+    color: grey;
+    font-size: 0.7em;
+    margin-top: 20px;
+}
