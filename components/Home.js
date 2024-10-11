@@ -1,73 +1,122 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import Tweet from './Tweet'; 
-import styles from '../styles/Home.module.css'; 
+import React, { useState } from "react";
+import LastTweets from "./LastTweets";
+import Trends from "./Trends";
+import { useSelector, useDispatch } from "react-redux";
+import Link from "next/link";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
+import { logout } from "../reducers/user";
 
 const Home = () => {
-  const user = useSelector((state) => state.user.value); 
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.value);
   const [tweetText, setTweetText] = useState('');
   const [tweets, setTweets] = useState([]);
 
-  const handleTweetSubmit = () => {
-    if (tweetText.trim()) {
-      
-      const newTweet = {
-        id: Date.now(), 
-        text: tweetText,
-        user: user.username, 
-        createdAt: new Date().toISOString(),
-      };
+  const handleTweetChange = (e) => {
+    setTweetText(e.target.value);
+  };
 
-      setTweets((prevTweets) => [...prevTweets, newTweet]); 
-      setTweetText(''); 
+  const handleTweetSubmit = (e) => {
+    if (e.key === "Enter" && tweetText.trim()) {
+      const newTweet = {
+        id: Date.now(),
+        content: tweetText,
+        author: user.username,
+        nbLike: 0,
+        creationDate: new Date(),
+      };
+      setTweets([newTweet, ...tweets]);
+      setTweetText('');
     }
   };
 
-  useEffect(() => {
-    
-    const fetchTweets = async () => {
-      
-      const fetchedTweets = [
-        {
-          id: 1,
-          content: "Hello World! #test #cool pas mal #dernierTest",
-          author: "user1",
-          nbLike: 4,
-          authorFirstname: "Bob",
-          authorUsername: "Dylan",
-          creationDate : new Date("2024-02-01")
-        },
-        { id: 2, content: "React is awesome", author: "user2", nbLike: 4 },
-      ];
-      setTweets(fetchedTweets); 
-    };
-
-    fetchTweets(); 
-  }, []);
+  const handleTweetPost = () => {
+    if (tweetText.trim()) {
+      const newTweet = {
+        id: Date.now(),
+        content: tweetText,
+        author: user.username,
+        nbLike: 0,
+        creationDate: new Date(),
+      };
+      setTweets([newTweet, ...tweets]);
+      setTweetText('');
+    }
+  };
 
   return (
-    <div className="home">
-      <header>
-        <h1>Bienvenue, {user?.username || 'Invité'}</h1> {}
-      </header>
-      <textarea
-        value={tweetText}
-        onChange={(e) => setTweetText(e.target.value)}
-        placeholder="Quoi de neuf ?"
-        maxLength={280} 
-      />
-      <button onClick={handleTweetSubmit}>Tweeter</button>
-      <div>
-        <h2>Derniers Tweets</h2>
-        {tweets.map((tweet) => (
-          <Tweet key={tweet.id} tweet={tweet} />
-        ))}
+    <div className={styles.main}>
+      <div className={styles.leftSection}>
+        <div className={styles.returnLink}>
+          <Link href="/home">
+            <a>
+              <Image
+                src={"/ReverseLogoTwitter.png"}
+                alt="reverse twitter logo"
+                height={100}
+                width={100}
+              />
+            </a>
+          </Link>
+        </div>
+        <div className={styles.footLeftSection}>
+          <div className={styles.userInfos}>
+            <div className={styles.profilPicture}>
+              <Image
+                src="/twitter-oeuf.jpg"
+                alt="profil egg"
+                height={50}
+                width={50}
+              />
+            </div>
+            <div className={styles.userNames}>
+              <span className={styles.name}>{user.firstname}</span>
+              <span className={styles.name}>@{user.username}</span>
+            </div>
+          </div>
+          <button
+            className={styles.logoutBtn}
+            onClick={() => dispatch(logout())}
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+
+      <div className={styles.middleSection}>
+        <div className={styles.header}>
+          <span className={styles.title}>Home</span>
+          <textarea
+            className={styles.textarea}
+            value={tweetText}
+            onChange={handleTweetChange}
+            onKeyDown={handleTweetSubmit}
+            placeholder="Quoi de neuf ?"
+            maxLength={280}
+          />
+          <button className={styles.tweetBtn} onClick={handleTweetPost}>
+            Tweet
+          </button>
+        </div>
+        <LastTweets tweets={tweets} user={user} onTweetDelete={setTweets} />
+      </div>
+
+      <div className={styles.rightSection}>
+        <Trends />
       </div>
     </div>
   );
 };
 
 export default Home;
+
+
+
+
+
+
+
 
 
 
