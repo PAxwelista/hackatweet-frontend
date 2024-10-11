@@ -18,49 +18,18 @@ const Hashtag = (props) => {
 
   useEffect(() => {
     setHashtagInput(props.hashtag);
+    fetch("http://localhost:3000/tweet/tweets")
+      .then((response) => response.json())
+      .then((data) =>
+        setTweets(data.filter((e) => e.hashtags.includes("#"+props.hashtag)))
+      );
   }, [props.hashtag]);
 
-  useEffect(() => {
-    fetchTweets();
-  }, []);
+  const onDeleteTweet = (tweetId) => {
+    setTweets(tweets.filter((e) => e._id != tweetId));
+  };
 
   !user.token && router.push("/");
-
-  const fetchTweets = () => {
-    const mockTweets = [
-      {
-        id: 1,
-        content: "Hello World! #test #cool pas mal #dernierTest",
-        author: "user1",
-        nbLike: 4,
-        authorFirstname: "Bob",
-        authorUsername: "Dylan",
-        creationDate : new Date("2024-02-01")
-      },
-      { id: 2, content: "React is awesome", author: "user2", nbLike: 4 },
-      {
-        id: 1,
-        content: "Hello World! #test #cool pas mal #dernierTest",
-        author: "user1",
-        nbLike: 4,
-        authorFirstname: "Bob",
-        authorUsername: "Dylan",
-        creationDate : new Date("2024-02-01")
-      },
-      { id: 2, content: "React is awesome", author: "user2", nbLike: 4 },
-      {
-        id: 1,
-        content: "Hello World! #test #cool pas mal #dernierTest",
-        author: "user1",
-        nbLike: 4,
-        authorFirstname: "Bob",
-        authorUsername: "Dylan",
-        creationDate : new Date("2024-02-01")
-      },
-      { id: 2, content: "React is awesome", author: "user2", nbLike: 4 },
-    ];
-    setTweets(mockTweets);
-  };
 
   const handleHashtagChange = (e) => {
     setHashtagInput(e.target.value);
@@ -140,7 +109,7 @@ const Hashtag = (props) => {
             onKeyDown={handleHashtagSubmit}
           />
         </div>
-        <LastTweets tweets={tweets} user={user} onTweetDelete={setTweets} />
+        <LastTweets tweets={tweets} user={user} onDeleteTweet={onDeleteTweet} />
       </div>
 
       <div className={styles.rightSection}>
