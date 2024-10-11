@@ -6,12 +6,19 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { logout } from "../reducers/user";
+import { useEffect } from "react";
 
 const Home = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
   const [tweetText, setTweetText] = useState('');
   const [tweets, setTweets] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/tweet/tweets")
+      .then((response) => response.json())
+      .then(data => setTweets(data));
+  });
 
   const handleTweetChange = (e) => {
     setTweetText(e.target.value);
