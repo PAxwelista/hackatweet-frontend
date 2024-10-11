@@ -15,12 +15,13 @@ const Home = () => {
   const user = useSelector((state) => state.user.value);
   const [tweetText, setTweetText] = useState('');
   const [tweets, setTweets] = useState([]);
+  const [toggle, setToggle] = useState(true);
 
   useEffect(() => {
     fetch("http://localhost:3000/tweet/tweets")
       .then((response) => response.json())
       .then(data => setTweets(data));
-  });
+  },[]);
 
   const handleTweetChange = (e) => {
     setTweetText(e.target.value);
@@ -41,7 +42,9 @@ const Home = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ content : tweetText, token :user.token  }),}).then(()=>{
-        setTweetText('');})
+        setTweetText('')
+        setToggle(!toggle);})
+        
   };
 
   return (
@@ -102,7 +105,7 @@ const Home = () => {
       </div>
 
       <div className={styles.rightSection}>
-        <Trends />
+        <Trends toggle={toggle}/>
       </div>
     </div>
   );

@@ -10,13 +10,14 @@ import { useState ,useEffect } from "react";
 const Tweet = ({ tweet, isOwner, onDeleteTweet }) => {
   const user = useSelector((state) => state.user.value);
 
-  const [isLiked , setIsLiked] = useState("")
+  const [isLiked , setIsLiked] = useState(false)
+  const [nbLikes , setNbLikes]= useState(0)
  
   useEffect(()=>{
     fetch(`http://localhost:3000/tweet/isLiked/${tweet._id}/${user.token}`)
     .then(response=>response.json())
     .then(data=>setIsLiked(data.isLiked))
-  },[isLiked])
+  },[])
 
   const handleDelete = () => {
     if (
@@ -30,11 +31,16 @@ const Tweet = ({ tweet, isOwner, onDeleteTweet }) => {
   };
 
   const handleLike = () => {
-    fetch(`http://localhost:3000/tweet/tweets/${tweet._id}/${user.token}`, {
-      method: "POST",
-    })
-      .then((response) => response.json())
-      .then(data => setIsLiked(data.liked));
+    // fetch(`http://localhost:3000/tweet/tweets/${tweet._id}/${user.token}`, {
+    //   method: "POST",
+    // })
+    //   .then((response) => response.json())
+    //   .then(data => setIsLiked(data.liked));
+    
+    setIsLiked(!isLiked)
+    setNbLikes(isLiked ? nbLikes-1 : nbLikes+1)
+
+
   };
 
   const heartStyle = isLiked ? { color: "red" } : { color: "white" };
@@ -93,7 +99,7 @@ const Tweet = ({ tweet, isOwner, onDeleteTweet }) => {
             onClick={() => handleLike()}
             icon={faHeart}
           />
-          <span className={styles.nbLikes}>{tweet.likes.length}</span>
+          <span className={styles.nbLikes}>{nbLikes}</span>
         </div>
         {isOwner && (
           <FontAwesomeIcon

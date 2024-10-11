@@ -20,8 +20,12 @@ const Hashtag = (props) => {
     setHashtagInput(props.hashtag);
     fetch("http://localhost:3000/tweet/tweets")
       .then((response) => response.json())
-      .then((data) =>
-        setTweets(data.filter((e) => e.hashtags.includes("#"+props.hashtag)))
+      .then((data) =>setTweets(data.filter((e) => {
+        if (e.hashtags) {
+          return e.hashtags.includes("#"+props.hashtag)
+        }
+
+      }))
       );
   }, [props.hashtag]);
 

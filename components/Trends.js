@@ -3,14 +3,14 @@ import styles from "../styles/Trends.module.css";
 import Link from "next/link";
 import { useState,useEffect } from "react";
 
-const Trends = () => {
+const Trends = (props) => {
 
   const [trends , setTrends] = useState([])
   useEffect(()=>{
     fetch("http://localhost:3000/tweet/trends")
       .then(response=>response.json())
       .then(data=>setTrends(data.map(e=>{return {hashtag : e._id , count : e.count}})))
-  },[])
+  },[props.toggle])
 
   function removeHashtag(word) {
     if (!word) {
