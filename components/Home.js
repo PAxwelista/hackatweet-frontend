@@ -27,19 +27,8 @@ const Home = () => {
     
     const fetchTweets = async () => {
       
-      const fetchedTweets = [
-        {
-          id: 1,
-          content: "Hello World! #test #cool pas mal #dernierTest",
-          author: "user1",
-          nbLike: 4,
-          authorFirstname: "Bob",
-          authorUsername: "Dylan",
-          creationDate : new Date("2024-02-01")
-        },
-        { id: 2, content: "React is awesome", author: "user2", nbLike: 4 },
-      ];
-      setTweets(fetchedTweets); 
+      
+      setTweets([]); 
     };
 
     fetchTweets(); 
