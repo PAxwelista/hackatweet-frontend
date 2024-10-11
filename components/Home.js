@@ -6,9 +6,11 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { logout } from "../reducers/user";
+import { useRouter } from "next/router";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const user = useSelector((state) => state.user.value);
   const [tweetText, setTweetText] = useState('');
   const [tweets, setTweets] = useState([]);
@@ -16,33 +18,23 @@ const Home = () => {
   const handleTweetChange = (e) => {
     setTweetText(e.target.value);
   };
+  !user.token && router.push("/");
 
   const handleTweetSubmit = (e) => {
-    if (e.key === "Enter" && tweetText.trim()) {
-      const newTweet = {
-        id: Date.now(),
-        content: tweetText,
-        author: user.username,
-        nbLike: 0,
-        creationDate: new Date(),
-      };
-      setTweets([newTweet, ...tweets]);
-      setTweetText('');
+    if (e.key === "Enter") {
+      
+      handleTweetPost()
+      
     }
   };
 
   const handleTweetPost = () => {
-    if (tweetText.trim()) {
-      const newTweet = {
-        id: Date.now(),
-        content: tweetText,
-        author: user.username,
-        nbLike: 0,
-        creationDate: new Date(),
-      };
-      setTweets([newTweet, ...tweets]);
-      setTweetText('');
-    }
+    fetch("http://localhost:3000/tweet/tweets",{method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ content : tweetText, token :user.token  }),}).then(()=>{
+        setTweetText('');})
   };
 
   return (

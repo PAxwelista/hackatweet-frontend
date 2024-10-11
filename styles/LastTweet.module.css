@@ -1,3 +1,4 @@
 .lastTweet{
+    overflow: scroll;
     max-height:fit-content;
 }
