@@ -9,12 +9,16 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { logout } from "../reducers/user";
 
-const Hashtag = () => {
+const Hashtag = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const user = useSelector((state) => state.user.value);
-  const [hashtagInput, setHashtagInput] = useState("");
+  const [hashtagInput, setHashtagInput] = useState(props.hashtag);
   const [tweets, setTweets] = useState([]);
+
+  useEffect(() => {
+    setHashtagInput(props.hashtag);
+  }, [props.hashtag]);
 
   useEffect(() => {
     fetchTweets();
@@ -24,36 +28,81 @@ const Hashtag = () => {
 
   const fetchTweets = () => {
     const mockTweets = [
-      { id: 1, content: "Hello World!", author: "user1" },
-      { id: 2, content: "React is awesome", author: "user2" },
+      {
+        id: 1,
+        content: "Hello World! #test #cool pas mal #dernierTest",
+        author: "user1",
+        nbLike: 4,
+        authorFirstname: "Bob",
+        authorUsername: "Dylan",
+        creationDate : new Date("2024-02-01")
+      },
+      { id: 2, content: "React is awesome", author: "user2", nbLike: 4 },
+      {
+        id: 1,
+        content: "Hello World! #test #cool pas mal #dernierTest",
+        author: "user1",
+        nbLike: 4,
+        authorFirstname: "Bob",
+        authorUsername: "Dylan",
+        creationDate : new Date("2024-02-01")
+      },
+      { id: 2, content: "React is awesome", author: "user2", nbLike: 4 },
+      {
+        id: 1,
+        content: "Hello World! #test #cool pas mal #dernierTest",
+        author: "user1",
+        nbLike: 4,
+        authorFirstname: "Bob",
+        authorUsername: "Dylan",
+        creationDate : new Date("2024-02-01")
+      },
+      { id: 2, content: "React is awesome", author: "user2", nbLike: 4 },
     ];
     setTweets(mockTweets);
   };
 
   const handleHashtagChange = (e) => {
-    const text = e.target.value;
-    if (text.length <= 280) {
-      setHashtagInput(text);
-    }
+    setHashtagInput(e.target.value);
   };
 
   const handleHashtagSubmit = (e) => {
-    if (e.code ==="Enter"){
-        // ici il faut changer l'url de la page  : hashtag/hello
+    if (e.code === "Enter" && hashtagInput.length > 0) {
+      // empêche de valider si l'inpu est vide
+      router.push(`/hashtag/${removeHashtag(hashtagInput)}`);
     }
   };
+
+  function addHashtag(word) {
+    if (!word) {
+      return "";
+    } else if (word[0] != "#") {
+      return "#" + word;
+    }
+    return word;
+  }
+  function removeHashtag(word) {
+    if (!word) {
+      return "";
+    } else if (word[0] === "#") {
+      return word.substr(1);
+    }
+    return word;
+  }
 
   return (
     <div className={styles.main}>
       <div className={styles.leftSection}>
         <div className={styles.returnLink}>
           <Link href="/home">
-            <Image
-              src={"/ReverseLogoTwitter.png"}
-              height={100}
-              width={100}
-              alt="reverse twitter logo"
-            />
+            <a>
+              <Image
+                src={"/ReverseLogoTwitter.png"}
+                alt="reverse twitter logo"
+                height={100}
+                width={100}
+              />
+            </a>
           </Link>
         </div>
         <div className={styles.footLeftSection}>
@@ -64,7 +113,7 @@ const Hashtag = () => {
                 height={50}
                 width={50}
                 alt="profil egg"
-                style={{borderRadius:"50%"}}
+                style={{ borderRadius: "50%" }}
               />
             </div>
             <div className={styles.userNames}>
@@ -86,7 +135,7 @@ const Hashtag = () => {
           <span className={styles.title}>Hashtag</span>
           <input
             className={styles.input}
-            value={hashtagInput}
+            value={addHashtag(hashtagInput)}
             onChange={handleHashtagChange}
             onKeyDown={handleHashtagSubmit}
           />

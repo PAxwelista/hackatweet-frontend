@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Tweet from './Tweet'; 
-import './Home.css'; 
+import styles from '../styles/Home.module.css'; 
 
 const Home = () => {
-  const user = useSelector((state) => state.user); 
+  const user = useSelector((state) => state.user.value); 
   const [tweetText, setTweetText] = useState('');
   const [tweets, setTweets] = useState([]);
 
@@ -28,8 +28,16 @@ const Home = () => {
     const fetchTweets = async () => {
       
       const fetchedTweets = [
-        { id: 1, text: 'Ceci est un tweet!', user: 'Alice', createdAt: '2024-10-10T10:00:00Z' },
-        { id: 2, text: 'Un autre tweet!', user: 'Bob', createdAt: '2024-10-10T10:05:00Z' },
+        {
+          id: 1,
+          content: "Hello World! #test #cool pas mal #dernierTest",
+          author: "user1",
+          nbLike: 4,
+          authorFirstname: "Bob",
+          authorUsername: "Dylan",
+          creationDate : new Date("2024-02-01")
+        },
+        { id: 2, content: "React is awesome", author: "user2", nbLike: 4 },
       ];
       setTweets(fetchedTweets); 
     };

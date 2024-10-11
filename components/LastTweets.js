@@ -1,7 +1,8 @@
 import React from 'react';
 import Tweet from './Tweet';
+import styles from "../styles/LastTweet.module.css"
 
-const LastTweets = ({ tweets, user, onTweetDelete }) => {
+const LastTweets = ({ tweets, user, onTweetDelete}) => {
 
   
   const handleDelete = (id) => {
@@ -10,7 +11,7 @@ const LastTweets = ({ tweets, user, onTweetDelete }) => {
   };
 
   return (
-    <div className="last-tweets">
+    <div className={styles.lastTweet}>
       {tweets.map((tweet) => (
         <Tweet
           key={tweet.id}
