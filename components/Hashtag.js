@@ -14,26 +14,12 @@ const Hashtag = (props) => {
   const router = useRouter();
   const user = useSelector((state) => state.user.value);
   const [hashtagInput, setHashtagInput] = useState(props.hashtag);
-  const [tweets, setTweets] = useState([]);
-
-  useEffect(() => {
-    setHashtagInput(props.hashtag);
-    fetch("http://localhost:3000/tweet/tweets")
-      .then((response) => response.json())
-      .then((data) =>setTweets(data.filter((e) => {
-        if (e.hashtags) {
-          return e.hashtags.includes("#"+props.hashtag)
-        }
-
-      }))
-      );
-  }, [props.hashtag]);
-
-  const onDeleteTweet = (tweetId) => {
-    setTweets(tweets.filter((e) => e._id != tweetId));
-  };
-
+  const [toggleReload , setToggleReload] = useState(false);
   !user.token && router.push("/");
+
+  useEffect(()=>{
+    setHashtagInput(props.hashtag)
+  },[props.hashtag])
 
   const handleHashtagChange = (e) => {
     setHashtagInput(e.target.value);
@@ -113,11 +99,11 @@ const Hashtag = (props) => {
             onKeyDown={handleHashtagSubmit}
           />
         </div>
-        <LastTweets tweets={tweets} user={user} onDeleteTweet={onDeleteTweet} />
+        <LastTweets hashtag={props.hashtag} onRemoveTweet={()=>setToggleReload(!toggleReload)}/>
       </div>
 
       <div className={styles.rightSection}>
-        <Trends />
+        <Trends toggleReload={toggleReload}/>
       </div>
     </div>
   );

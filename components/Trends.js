@@ -7,10 +7,10 @@ const Trends = (props) => {
 
   const [trends , setTrends] = useState([])
   useEffect(()=>{
-    fetch("http://localhost:3000/tweet/trends")
+    fetch("http://localhost:3000/tweets/trends")
       .then(response=>response.json())
-      .then(data=>setTrends(data.map(e=>{return {hashtag : e._id , count : e.count}})))
-  },[props.toggle])
+      .then(data=>setTrends(data.trends.map(e=>{return {hashtag : e._id , count : e.count}})))
+  },[props.toggleReload])
 
   function removeHashtag(word) {
     if (!word) {

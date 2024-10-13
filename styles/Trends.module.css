@@ -5,6 +5,7 @@
 .trends{
     background-color: rgb(33, 41, 52);
     border-radius: 10px;
+    overflow: scroll;
 }
 .trend{
     display: flex;
@@ -17,8 +18,10 @@
     border-radius: 10px;
 }
 .main{
+    padding: 20px;
     display: flex;
     flex-direction: column;
+    height: 100vh;
 }
 .textNbTweet{
     color: grey;

@@ -5,48 +5,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment/moment";
 import { useSelector } from "react-redux";
-import { useState ,useEffect } from "react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
-const Tweet = ({ tweet, isOwner, onDeleteTweet }) => {
-  const user = useSelector((state) => state.user.value);
-
-  const [isLiked , setIsLiked] = useState(false)
-  const [nbLikes , setNbLikes]= useState(0)
- 
-  useEffect(()=>{
-    fetch(`http://localhost:3000/tweet/isLiked/${tweet._id}/${user.token}`)
-    .then(response=>response.json())
-    .then(data=>setIsLiked(data.isLiked))
-  },[])
-
-  const handleDelete = () => {
-    if (
-      isOwner &&
-      window.confirm("Voulez-vous vraiment supprimer ce tweet ?")
-    ) {
-      fetch(`http://localhost:3000/tweet/tweets/${tweet._id}`, {
-        method: "DELETE",
-      }).then(() => onDeleteTweet(tweet._id));
-    }
-  };
-
-  const handleLike = () => {
-    // fetch(`http://localhost:3000/tweet/tweets/${tweet._id}/${user.token}`, {
-    //   method: "POST",
-    // })
-    //   .then((response) => response.json())
-    //   .then(data => setIsLiked(data.liked));
-    
-    setIsLiked(!isLiked)
-    setNbLikes(isLiked ? nbLikes-1 : nbLikes+1)
-
-
-  };
+const Tweet = ({
+  createdAt,
+  authorFirstname,
+  authorUsername,
+  content,
+  isOwner,
+  onDeleteTweet,
+  onLikeTweet,
+  id,
+  isLiked,
+  nbLikes
+}) => {
 
   const heartStyle = isLiked ? { color: "red" } : { color: "white" };
 
   function addColorSpanToHashtag(tweet) {
-    const hashtagWords = tweet && tweet.match(/#[a-z]*/gi);
+    const hashtagWords = tweet && tweet.match(/#\S*/gi);
     const tweetTab = [];
     let lastStop = 0;
     if (hashtagWords) {
@@ -61,12 +39,17 @@ const Tweet = ({ tweet, isOwner, onDeleteTweet }) => {
     }
     if (!tweetTab.length) return tweet;
     return (
-      <div>
+      <div >
         {tweetTab.map((e, i) => {
+          const link = `/hashtag/${e.substr(1)}`;
           return i % 2 ? (
-            <span className={styles.colorSpan}>{e}</span>
+            <React.Fragment key={i}>
+            <Link href={link}>
+              <a className={styles.link}>{e}</a>
+            </Link>
+            </React.Fragment>
           ) : (
-            <span>{e}</span>
+            <span  key={i}>{e}</span>
           );
         })}
       </div>
@@ -84,26 +67,26 @@ const Tweet = ({ tweet, isOwner, onDeleteTweet }) => {
           style={{ borderRadius: "50%" }}
         />
         <div className={styles.userInfos}>
-          <span>{tweet.author.firstname}</span>
+          <span>{authorFirstname}</span>
           <span className={styles.secondUserInfo}>
-            @{tweet.author.username} · {moment(tweet.createdAt).fromNow()}
+            @{authorUsername} · {moment(createdAt).fromNow()}
           </span>
         </div>
       </div>
-      <p>{addColorSpanToHashtag(tweet.content)}</p>
+      <div className={styles.textContent}>{addColorSpanToHashtag(content)}</div>
       <div className={styles.lastLine}>
         <div>
           <FontAwesomeIcon
             style={heartStyle}
             className={styles.heart}
-            onClick={() => handleLike()}
+            onClick={()=>onLikeTweet(id)}
             icon={faHeart}
           />
           <span className={styles.nbLikes}>{nbLikes}</span>
         </div>
         {isOwner && (
           <FontAwesomeIcon
-            onClick={handleDelete}
+            onClick={()=>onDeleteTweet(id)}
             icon={faTrashCan}
             className={styles.trash}
           />

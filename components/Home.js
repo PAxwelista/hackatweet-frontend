@@ -7,45 +7,37 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { logout } from "../reducers/user";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 const Home = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const user = useSelector((state) => state.user.value);
-  const [tweetText, setTweetText] = useState('');
-  const [tweets, setTweets] = useState([]);
-  const [toggle, setToggle] = useState(true);
 
-  useEffect(() => {
-    fetch("http://localhost:3000/tweet/tweets")
-      .then((response) => response.json())
-      .then(data => setTweets(data));
-  },[]);
+  const [tweetText, setTweetText] = useState("");
+  const [toggleReload , setToggleReload] = useState(false);
 
-  const handleTweetChange = (e) => {
-    setTweetText(e.target.value);
-  };
   !user.token && router.push("/");
 
   const handleTweetSubmit = (e) => {
-    if (e.key === "Enter") {
-      
-      handleTweetPost()
-      
+    if (e.key === "Enter" || e==="onClick") {
+      fetch("http://localhost:3000/tweets", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: tweetText, token: user.token }),
+      })
+        .then((response) => response.json())
+        .then(() => {
+          setTweetText("");
+          setToggleReload(!toggleReload)
+        });
     }
   };
 
-  const handleTweetPost = () => {
-    fetch("http://localhost:3000/tweet/tweets",{method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ content : tweetText, token :user.token  }),}).then(()=>{
-        setTweetText('')
-        setToggle(!toggle);})
-        
-  };
+  const handleOnRemoveTweet = () =>{
+    setToggleReload(!toggleReload)
+  }
 
   return (
     <div className={styles.main}>
@@ -92,34 +84,26 @@ const Home = () => {
           <textarea
             className={styles.textarea}
             value={tweetText}
-            onChange={handleTweetChange}
+            onChange={(e) => setTweetText(e.target.value)}
             onKeyDown={handleTweetSubmit}
             placeholder="Quoi de neuf ?"
             maxLength={280}
           />
-          <button className={styles.tweetBtn} onClick={handleTweetPost}>
+          <button
+            className={styles.tweetBtn}
+            onClick={() => handleTweetSubmit("onClick")}
+          >
             Tweet
           </button>
         </div>
-        <LastTweets tweets={tweets} user={user} onTweetDelete={setTweets} />
+        <LastTweets toggleReload={toggleReload} onRemoveTweet={handleOnRemoveTweet}/>
       </div>
 
       <div className={styles.rightSection}>
-        <Trends toggle={toggle}/>
+        <Trends toggleReload={toggleReload}/>
       </div>
     </div>
   );
 };
 
 export default Home;
-
-
-
-
-
-
-
-
-
-
-

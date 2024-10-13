@@ -35,6 +35,10 @@
 .nbLikes{
     margin :0 10px 0 5px ;
 }
-.colorSpan{
-    color : #6a9af8
+.link{
+    color : #6a9af8;
+    text-decoration: none;
+}
+.textContent{
+    margin: 20px 0
 }
