@@ -3,6 +3,7 @@ import Tweet from "./Tweet";
 import styles from "../styles/LastTweet.module.css";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import { routeBE } from "../route";
 
 const LastTweets = (props) => {
   const user = useSelector((state) => state.user.value);
@@ -13,7 +14,7 @@ const LastTweets = (props) => {
   }, [props.hashtag, props.toggleReload]);
 
   const fetchTweet = () => {
-    fetch("http://localhost:3000/tweets")
+    fetch(`${routeBE}/tweets`)
       .then((response) => response.json())
       .then((data) => {
         setTweets(
@@ -30,7 +31,7 @@ const LastTweets = (props) => {
 
   const handleDeleteTweet = (tweetId) => {
     if (window.confirm("Voulez-vous vraiment supprimer ce tweet ?")) {
-      fetch(`http://localhost:3000/tweets/${tweetId}`, {
+      fetch(`${routeBE}/tweets/${tweetId}`, {
         method: "DELETE",
       }).then(() => {
         fetchTweet();
@@ -40,7 +41,7 @@ const LastTweets = (props) => {
   };
 
   const handleLikeTweet = (tweetId) => {
-    fetch(`http://localhost:3000/tweets/${tweetId}`, {
+    fetch(`${routeBE}/tweets/${tweetId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

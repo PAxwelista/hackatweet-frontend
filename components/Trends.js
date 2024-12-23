@@ -2,12 +2,13 @@ import React from "react";
 import styles from "../styles/Trends.module.css";
 import Link from "next/link";
 import { useState,useEffect } from "react";
+import { routeBE } from "../route";
 
 const Trends = (props) => {
 
   const [trends , setTrends] = useState([])
   useEffect(()=>{
-    fetch("http://localhost:3000/tweets/trends")
+    fetch(`${routeBE}/tweets/trends`)
       .then(response=>response.json())
       .then(data=>setTrends(data.trends.map(e=>{return {hashtag : e._id , count : e.count}})))
   },[props.toggleReload])

@@ -70,8 +70,6 @@
 .logoutBtn:hover{
     background-color: rgb(45, 53, 65);
 }
-.rightSection{
-}
 .middleSection{
     height:100vh;
     display: flex;

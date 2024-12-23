@@ -7,6 +7,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { logout } from "../reducers/user";
 import { useRouter } from "next/router";
+import { routeBE } from "../route";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const Home = () => {
 
   const handleTweetSubmit = (e) => {
     if (e.key === "Enter" || e==="onClick") {
-      fetch("http://localhost:3000/tweets", {
+      fetch(`${routeBE}/tweets`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,6 +63,7 @@ const Home = () => {
                 alt="profil egg"
                 height={50}
                 width={50}
+                objectFit="cover"
               />
             </div>
             <div className={styles.userNames}>

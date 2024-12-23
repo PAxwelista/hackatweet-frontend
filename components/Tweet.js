@@ -4,8 +4,6 @@ import styles from "../styles/Tweet.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment/moment";
-import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
 import Link from "next/link";
 
 const Tweet = ({
@@ -64,7 +62,8 @@ const Tweet = ({
           height={50}
           width={50}
           alt="profil egg"
-          style={{ borderRadius: "50%" }}
+          style={{ borderRadius: "50%"}}
+          objectFit="cover"
         />
         <div className={styles.userInfos}>
           <span>{authorFirstname}</span>

@@ -80,7 +80,7 @@
   background-color: rgb(33, 41, 52);
   padding: 10px;
   resize: none;
-  color: white; /* Couleur du texte dans la zone de texte */
+  color: white; 
 }
 
 .tweetBtn {

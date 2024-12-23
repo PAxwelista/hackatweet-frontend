@@ -5,6 +5,7 @@ import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { login } from "../reducers/user";
+import { routeBE } from "../route";
 
 export default function SignUp(props) {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ export default function SignUp(props) {
   const [errMessage, setErrMessage] = useState("");
 
   const handleClick = () => {
-    fetch("http://localhost:3000/users/signin", {
+    fetch(`${routeBE}/users/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +25,7 @@ export default function SignUp(props) {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          fetch(`http://localhost:3000/users/firstname/${data.token}`)
+          fetch(`${routeBE}/users/firstname/${data.token}`)
             .then((response) => response.json())
             .then((dataUsername) => {
               dispatch(
