@@ -16,7 +16,7 @@ const Home = () => {
 
   const [tweetText, setTweetText] = useState("");
   const [toggleReload , setToggleReload] = useState(false);
-
+console.log(tweetText)
   !user.token && router.push("/");
 
   const handleTweetSubmit = (e) => {
